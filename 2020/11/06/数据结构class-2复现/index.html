@@ -97,19 +97,174 @@
   }
 }( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><meta name="generator" content="Hexo 5.2.0"></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="../../../../img/assets/cat.png"></div><!--.profile-saying
   i.fa.fa-comment
-  .saying--><div class="cxo-profile-inner"><div class="profile-name">RCX的奇妙屋</div><div class="profile-signature">知吾所欲难，然知吾所不欲易</div><div class="friends"><div>FRIENDS</div><span><a href="//github.com" target="_black">friendA</a></span><span><a href="//google.com" target="_black">friendB</a></span><span><a href="https://www.popiapp.cn/mtR8uT" target="_black">Popi箱</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">Mr.Ran's Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">数据结构class_2复现</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2020-11-06</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="数据结构"> 数据结构</a></span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><p>class2的主要框架：<br>    stack的顺序实现，以及逆波澜表达式的运算<br>    涉及知识点：1.地址传递与参数传递<br>                地址传递参数地址，变量的数值会随着函数的调用而改变<br>                    注：这是一种很好的技巧，在逆波澜表达式中经常运用，个人认为它的优点在于if中判断时已经执行过一次，无关if判断正确与否都会执行一次<br>                    第二个优点是：传输过程中值传递程序运行更快，如果像更快而等效于参数传递，可以用地址传递和const并用来实现</p>
-<pre><code>            2.范式的定义
-                个人觉得这个范式并没有太多特殊的地方，无非就是变量类型多加了一个新的名字，真正实现多种同类型的栈的同时构建，还是应该运用模板类
-                本来想在证一个变量中能够同时支持多种变量类型，但是转念一想，用字符串类型本来就能起到相同作用，只是后面类型的规范过于麻烦，也因此作罢
-            3.顺序栈的实现
-                四个基本函数：stack（）构造函数：主要初始化count
-                              empty（）判断是否为空
-                              pop（）
-                              top（）
-                              push（）
-            4.数组是c++的内置结构，不需要继续造轮子了，list是后面的轮子哦
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">RCX的奇妙屋</div><div class="profile-signature">知吾所欲难，然知吾所不欲易</div><div class="friends"><div>FRIENDS</div><span><a href="//github.com" target="_black">friendA</a></span><span><a href="//google.com" target="_black">friendB</a></span><span><a href="https://www.popiapp.cn/mtR8uT" target="_black">Popi箱</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">Mr.Ran's Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">数据结构class_2复现</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2020-11-06</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="数据结构"> 数据结构</a></span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><p>）徒作复习耳<br>class2的主要框架：<br>    stack的顺序实现，以及逆波澜表达式的运算</p>
+<p>涉及知识点：<br>1.地址传递与参数传递<br>        地址传递参数地址，变量的数值会随着函数的调用而改变<br>        注意：这是一种很好的技巧，在逆波澜表达式中经常运用，个人认为它的优点在于if中判断时已经执行过一次，无关if判断正确与否都会执行一次<br>        第二个优点是：传输过程中值传递程序运行更快，如果像更快而等效于参数传递，可以用地址传递和const并用来实现</p>
+<p>2.范式的定义<br>    个人觉得这个范式并没有太多特殊的地方，无非就是变量类型多加了一个新的名字，真正实现多种同类型的栈的同时构建，还是应该运用模板类<br>    本来想在证一个变量中能够同时支持多种变量类型，但是转念一想，用字符串类型本来就能起到相同作用，只是后面类型的规范过于麻烦，也因此作罢</p>
+<p>3.顺序栈的实现<br>    四个基本函数：stack（）构造函数：主要初始化count<br>      empty（）判断是否为空<br>      pop（）<br>      top（）<br>      push（）</p>
+<p>4.数组是c++的内置结构，不需要继续造轮子了，list是后面的轮子哦</p>
+<p>5.抽象数据类型：类的一种理论描述</p>
+<p>6.栈进出的排列种类和2n！/n!*(n+1)!    </p>
+<pre><code>下面贴一下源码：
+#include &quot;class_2.h&quot;
+#include &quot;class_2_1.h&quot;
+int main() &#123;
+Stack stored_numbers;
+while (do_command(get_command(),stored_numbers));
+&#125;
 
-            5.抽象数据类型：类的一种理论描述
+头文件1：
 
-            6.栈进出的排列种类和2n！/n!*(n+1)!    </code></pre>
+#ifndef CLASS_2_CLASS_2_1_H
+#define CLASS_2_CLASS_2_1_H
+using namespace std;
+#include &lt;iostream&gt;
+#include &quot;class_2.h&quot;
+
+char get_command()&#123;
+    char command;
+    bool waiting= true;
+    cout&lt;&lt;&quot;select command and press &lt;Enter&gt;&quot;;
+    while (waiting)&#123;
+        cin&gt;&gt;command;
+        command=tolower(command);
+        if (command==&#39;?&#39;||command==&#39;=&#39;||command==&#39;+&#39;||
+        command==&#39;-&#39;||command==&#39;*&#39;||command==&#39;/&#39;||
+        command==&#39;q&#39;) waiting= false;
+        else&#123;
+            cout&lt;&lt;&quot;please enter a valid command&quot;&lt;&lt;endl;
+            &#125;
+        &#125;
+        return command;
+    &#125;
+
+bool do_command(char command,Stack &amp;numbers)&#123;
+    double p,q;
+    switch (command) &#123;
+        case &#39;?&#39;:
+            cout&lt;&lt;&quot;Enter a real number:&quot;&lt;&lt;flush;
+            cin&gt;&gt;p;
+            if (numbers.push(p)==overflow)
+                cout&lt;&lt;&quot;Warning:stack full,lost number&quot;&lt;&lt;endl;
+            break;
+        case &#39;=&#39;:
+            if (numbers.top(p)==underflow)cout&lt;&lt;&quot;stack empty&quot;&lt;&lt;endl;
+            else cout&lt;&lt;p&lt;&lt;endl;
+            break;
+        case &#39;+&#39;:
+            if (numbers.top(p)==underflow)cout&lt;&lt;&quot;Stack empty&quot;&lt;&lt;endl;
+            else &#123;
+                numbers.pop();
+                if (numbers.top(q) == underflow)&#123;
+                    cout &lt;&lt; &quot;only one number &quot; &lt;&lt; endl;
+                    numbers.push(p);&#125;
+                else
+                    numbers.pop();
+                    if (numbers.push(p+q)==overflow)
+                        cout&lt;&lt;&quot;warning:stack full lost result&quot;&lt;&lt;endl;
+            &#125;
+            break;
+        case &#39;-&#39;:
+            if (numbers.top(p)==underflow)cout&lt;&lt;&quot;Stack empty&quot;&lt;&lt;endl;
+            else &#123;
+                numbers.pop();
+                if (numbers.top(q) == underflow)&#123;
+                    cout &lt;&lt; &quot;only one number &quot; &lt;&lt; endl;
+                    numbers.push(p);&#125;
+                else
+                    numbers.pop();
+                if (numbers.push(q-p)==overflow)
+                    cout&lt;&lt;&quot;warning:stack full lost result&quot;&lt;&lt;endl;
+            &#125;
+            break;
+        case &#39;*&#39;:
+            if (numbers.top(p)==underflow)cout&lt;&lt;&quot;Stack empty&quot;&lt;&lt;endl;
+            else &#123;
+                numbers.pop();
+                if (numbers.top(q) == underflow)&#123;
+                    cout &lt;&lt; &quot;only one number &quot; &lt;&lt; endl;
+                    numbers.push(p);&#125;
+                else
+                    numbers.pop();
+                if (numbers.push(p*q)==overflow)
+                    cout&lt;&lt;&quot;warning:stack full lost result&quot;&lt;&lt;endl;
+            &#125;
+            break;
+        case &#39;/&#39;:
+            if (numbers.top(p)==underflow)cout&lt;&lt;&quot;Stack empty&quot;&lt;&lt;endl;
+            else &#123;
+                numbers.pop();
+                if (numbers.top(q) == underflow)&#123;
+                    cout &lt;&lt; &quot;only one number &quot; &lt;&lt; endl;
+                    numbers.push(p);&#125;
+                else
+                    numbers.pop();
+                if (numbers.push(q/p)==overflow)
+                    cout&lt;&lt;&quot;warning:stack full lost result&quot;&lt;&lt;endl;
+            &#125;
+            break;
+        case &#39;q&#39;:
+            cout&lt;&lt;&quot;calculation finished&quot;&lt;&lt;endl;
+            return false;
+    &#125;
+    return true;
+&#125;
+
+#endif //CLASS_2_CLASS_2_1_H
+
+头文件2：
+
+#ifndef CLASS_2_CLASS_2_H
+#define CLASS_2_CLASS_2_H
+#include &lt;iostream&gt;
+
+using  namespace std;
+typedef enum&#123;success,overflow,underflow&#125; Error_code;
+typedef double Stack_entry;
+const  int  maxstack=10;
+class Stack&#123;
+public:
+    Stack();
+    bool empyt()const;
+    Error_code pop();
+    Error_code push(const Stack_entry &amp;item);
+    Error_code top(Stack_entry &amp;item) const;
+
+private:
+    int count;
+    Stack_entry entry[maxstack];
+
+&#125;;
+Error_code Stack::push(const Stack_entry &amp;item) &#123;
+    Error_code outcome=success;
+    if (count&gt;=maxstack)
+        outcome=overflow;
+    else
+        entry[count++]=item;
+    return outcome;
+
+&#125;
+Error_code Stack::pop() &#123;
+    Error_code outcome=success;
+    if (count==0)
+        outcome=underflow;
+    else --count;
+    return outcome ;
+&#125;
+Error_code Stack::top(Stack_entry &amp;item) const &#123;
+    Error_code outcome=success;
+    if (count==0)
+        outcome=underflow;
+    else
+        item=entry[count-1];
+    return outcome;
+&#125;
+bool Stack::empyt() const &#123;
+    bool outcome= true;
+    if (count&gt;0) outcome= false;
+    return outcome;
+&#125;
+Stack::Stack() &#123;
+    count=0;
+&#125;
+#endif //CLASS_2_CLASS_2_H</code></pre>
 </article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  浑水摸鱼rcx</span><a></a></p><p> <span>Copyright:  </span><span>所见即所思，请勿转载</span></p></div><div class="post-paginator"><a class="nextSlogan" href="../../05/%E6%9C%9F%E4%B8%AD%E4%B8%80%E4%BA%9B%E5%8F%8D%E6%80%9D/" title="期中一些反思"><span>NextPost ></span><br><span class="nextTitle">期中一些反思</span></a><div class="clear"></div></div><div id="comment"></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span> | theme </span><a target="_blank" rel="noopener" href="https://github.com/Longlongyu/hexo-theme-Cxo"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>
