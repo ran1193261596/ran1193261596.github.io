@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="RCX"><meta name="renderer" content="webkit"><meta name="copyright" content="RCX"><meta name="keywords" content="RCX的奇妙屋"><meta name="description" content=""><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>数据结构class_4 · Mr.Ran's Blog</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="../../../../img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="RCX"><meta name="renderer" content="webkit"><meta name="copyright" content="RCX"><meta name="keywords" content="RCX的奇妙屋"><meta name="description" content=""><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>数据结构class_4_链接实现and队列 · Mr.Ran's Blog</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="../../../../img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
   "use strict";
   // rel=preload support test
   if( !w.loadCSS ){
@@ -97,7 +97,7 @@
   }
 }( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><meta name="generator" content="Hexo 5.2.0"></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="../../../../img/assets/cat.png"></div><!--.profile-saying
   i.fa.fa-comment
-  .saying--><div class="cxo-profile-inner"><div class="profile-name">RCX的奇妙屋</div><div class="profile-signature">知吾所欲难，然知吾所不欲易</div><div class="friends"><div>FRIENDS</div><span><a href="//github.com" target="_black">friendA</a></span><span><a href="//google.com" target="_black">friendB</a></span><span><a href="https://www.popiapp.cn/mtR8uT" target="_black">Popi箱</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">Mr.Ran's Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">数据结构class_4</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2020-11-16</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="数据结构"> 数据结构</a></span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><p>主要内容：链接实现栈与队列<br>1.内存空间分配的方式：a.静态内存分配（在编译时实现）-&gt;自动对象 b.动态内存分配（在具体使用时分配）-&gt;动态对象<br>2.动态空间与静态空间在计算机中是分开存在的，动态空间部分位于堆（heap）中<br>3.动态空间生成函数 pointer= new type(parameter list)  实例：Node  * new_top =new Node(X1,X2)<br>4,动态对象的删除：delete 实例 delete item_ptr 注：delete后执政无定义，不知道指向哪里<br>5.指针偏移量：P+n   实际上是Address p+n<em>i  而n取决于类型的位数<br>6.空指针 item_ptr =NULL 注：区分与空指针和指向0的指针<br>7.（</em>p）.the_data 等同于 p-&gt;the_data  动态对象用指针访问数据，静态对象用名字<br>具体实现时遇到的一些问题：<br>    a.在c++中 NULL并不是关键字，要用0来代替<br>    则有点不明白NULL应该怎么定义，尝试运用 #define NULL nullptr 后续Node节点会报错</p>
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">RCX的奇妙屋</div><div class="profile-signature">知吾所欲难，然知吾所不欲易</div><div class="friends"><div>FRIENDS</div><span><a href="//github.com" target="_black">friendA</a></span><span><a href="//google.com" target="_black">friendB</a></span><span><a href="https://www.popiapp.cn/mtR8uT" target="_black">Popi箱</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">Mr.Ran's Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">数据结构class_4_链接实现and队列</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2020-11-16</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="数据结构"> 数据结构</a></span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><p>主要内容：链接实现栈与队列<br>1.内存空间分配的方式：a.静态内存分配（在编译时实现）-&gt;自动对象 b.动态内存分配（在具体使用时分配）-&gt;动态对象<br>2.动态空间与静态空间在计算机中是分开存在的，动态空间部分位于堆（heap）中<br>3.动态空间生成函数 pointer= new type(parameter list)  实例：Node  * new_top =new Node(X1,X2)<br>4,动态对象的删除：delete 实例 delete item_ptr 注：delete后执政无定义，不知道指向哪里<br>5.指针偏移量：P+n   实际上是Address p+n<em>i  而n取决于类型的位数<br>6.空指针 item_ptr =NULL 注：区分与空指针和指向0的指针<br>7.（</em>p）.the_data 等同于 p-&gt;the_data  动态对象用指针访问数据，静态对象用名字<br>具体实现时遇到的一些问题：<br>    a.在c++中 NULL并不是关键字，要用0来代替<br>    则有点不明白NULL应该怎么定义，尝试运用 #define NULL nullptr 后续Node节点会报错</p>
 <p>关于Node节点的构造：源码：</p>
 <pre><code>#ifndef CLASS_4_CLASS_3_H
 #define CLASS_4_CLASS_3_H
@@ -190,4 +190,69 @@ Stack::Stack(const Stack &amp;original) &#123;
     &#125;
 &#125;</code></pre>
 <p>关于链接栈的三种保护功能<br>1.析构函数，当栈失去头指针时候，自动删除内容，防止产生垃圾<br>2.=重载函数：实现链接栈的完全复制，而非仅仅复制地址<br>3.copy构造函数：在传递变量时，栈传递的是地址，这样默认情况下仅仅是对一个地址的修改，通过copy构造函数，构造了一个完整的栈，<br>问题：copy构造函数，我们实现了有地址到栈的完全复制，那么传递部分的功能是在哪里体现的？这个新构建的栈的名字叫什么？也是原来的栈？原来的栈应该没有消失吧</p>
+<p>队列的链接实现：其实本质上和栈的链接实现差距不多，都是运用Node节点够在后，用指针使节点相连接，保护措施应该是一样的。<br>比较显著的区别:栈的构建时进用到了一个new_top指针指向尾部，而队列的构建，运用了rear和front两个指针，分别指向队尾和队头<br>注意：队列的链接实现：做左头右尾<br>注意：队列中只有一个元素时，使用serve后需要更改rear为nullptr<br>注：源代码中为写队列的copy构造和=重载函数</p>
+<p>队列的源代码如下：</p>
+<pre><code>    //
+// Created by 11932 on 2020/11/17.
+//
+
+#ifndef CLASS_4_CLASS_4_H
+#define CLASS_4_CLASS_4_H
+#include &quot;class_3.h&quot;
+#include &quot;stdio.h&quot;
+typedef int Queue_entry;
+
+class Queue&#123;
+public:
+    Queue();
+    bool empty()const;
+    Error_code append(const  Queue_entry &amp;item);
+    Error_code serve();
+    Error_code retrieve(Queue_entry &amp;item);
+    ~Queue();
+    Queue(const Queue &amp;origingal);
+    void  operator=(const Queue &amp;originak);
+protected:
+    Node * front,*rear;
+&#125;;
+Queue::Queue() &#123;
+    front=rear= nullptr;
+&#125;
+Error_code Queue::append(const Queue_entry &amp;item) &#123;
+    Node *new_rear=new Node(item);
+    if (new_rear== nullptr)return overflow;
+    if (rear== nullptr) front=rear=new_rear;
+    else&#123;
+        rear-&gt;next=new_rear;
+        rear=new_rear;
+    &#125;
+    return success;
+&#125;
+Error_code Queue::serve() &#123;
+    if (front== nullptr)return underflow;
+    if (front-&gt;next= nullptr)&#123;
+        rear=front= nullptr;
+        return success;
+    &#125;
+    Node *old_front=front;
+    front=front-&gt;next;
+    delete  old_front;
+    return success;
+&#125;
+Error_code Queue::retrieve(Queue_entry &amp;item) &#123;
+    if (front== nullptr)return underflow;
+    item=front-&gt;entry;
+    return success;
+&#125;
+bool Queue::empty() const &#123;
+    if (front== nullptr)return true;
+    return false;
+
+&#125;
+Queue::~Queue() &#123;
+    while (!empty())
+        serve();
+&#125;
+
+#endif //CLASS_4_CLASS_4_H</code></pre>
 </article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  浑水摸鱼rcx</span><a></a></p><p> <span>Copyright:  </span><span>所见即所思，请勿转载</span></p></div><div class="post-paginator"><a class="nextSlogan" href="../../14/rcx%E7%9A%84%E5%B7%A5%E4%BD%9C%E7%B0%BF%E2%80%94%E2%80%9411-14/" title="rcx的工作簿——11/14"><span>NextPost ></span><br><span class="nextTitle">rcx的工作簿——11/14</span></a><div class="clear"></div></div><div id="comment"></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span> | theme </span><a target="_blank" rel="noopener" href="https://github.com/Longlongyu/hexo-theme-Cxo"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>
