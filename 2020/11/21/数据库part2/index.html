@@ -1,0 +1,117 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="RCX"><meta name="renderer" content="webkit"><meta name="copyright" content="RCX"><meta name="keywords" content="RCX的奇妙屋"><meta name="description" content=""><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>数据库part2 · Mr.Ran's Blog</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="../../../../img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
+
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><meta name="generator" content="Hexo 5.2.0"></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="../../../../img/assets/cat.png"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">RCX的奇妙屋</div><div class="profile-signature">知吾所欲难，然知吾所不欲易</div><div class="friends"><div>FRIENDS</div><span><a href="//github.com" target="_black">friendA</a></span><span><a href="//google.com" target="_black">friendB</a></span><span><a href="https://www.popiapp.cn/mtR8uT" target="_black">Popi箱</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">Mr.Ran's Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">数据库part2</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2020-11-21</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="数据库"> 数据库</a></span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><p>SQL语法：<br>1基本查询语法举例<br>SELECT SNO FROM Student<br>&emsp;&emsp;WHERE SNAME=’数学分析’；<br>备注:sql语言不支持大小写识别，但最好自己关键字大写</p>
+<p>2.学会用*显示所有内容<br>SELECT *  FROM Student<br>&emsp;&emsp;WHERE Sdept=’安泰’</p>
+<p>3.更改属性名字<br>SELECT SNO AS  SNO1,SNAME FROM  Student<br>&emsp;&emsp;WHERE SNAME=’数学分析’；</p>
+<p>4.select时候可以select属性构成的表达式<br>SELECT bar,beer, price*114 AS priceInYen<br>&emsp;&emsp;FROM SELLS;</p>
+<p>5.添加相同的属性    下面的例子添加了新的一列叫做‘wholikesbud’,里面的元素都是‘LIKE Buds’<br>SELECT drinkers , ‘LIKE Buds’ AS wholikesbud<br>&emsp;&emsp;FROM LIKES<br>&emsp;&emsp;WHERE beer=’Buds’;</p>
+<p>6.注意名字中如果有’应该用’’<br>例如WHERE bar = ‘John’’s’ AND</p>
+<p>SQL中简单的模板<br>%=任何一个字符串<br><em>=任意一个字母<br>例；WHERE sname LIKE ‘李</em>‘;</p>
+<p>7.NULL的一些用法<br>SELECT * FROM Student<br>&emsp;&emsp; WHERE phone is NULL;</p>
+<p>8.双重循环<br>SELECT bar FROM Sells<br>&emsp;&emsp;WHERE beer=’Miler‘ AND<br>&emsp;&emsp;&emsp;price=(<br>&emsp;&emsp;&emsp;&emsp;SELECT price FROM WHERE beer=’JOE’’S‘<br>&emsp;&emsp;&emsp;&emsp;AND beer=’Buds’;</p>
+<p>9.In的用法 配合where使用<br>例:<br>SELECT * FROM Beers<br>&emsp;&emsp;WHERE name IN {<br>&emsp;&emsp;&emsp;&emsp;&emsp;SELECT beer FROM LIKES<br>&emsp;&emsp;&emsp;&emsp;&emsp;WHERE  drinker=’Fred’);</p>
+<p>10Exists的用法<br>SELECT name  FROM Beers b1<br>&emsp;&emsp;WHERE NOT EXISTS(<br>&emsp;&emsp;SELECT *  FROM Beers<br>&emsp;&emsp;&emsp;&emsp;WHERE manf = b1.manf AND<br>&emsp;&emsp;&emsp;&emsp;name != b1.name);<br>主题 筛选是看b1的元组列，然后能否找到对应的条件</p>
+<p>11.操作符ANY(relation)和ALL(relation)的用法<br>SELECT grade FROM SC<br>&emsp;&emsp;WHERE  grade-30&gt;ANY(select  grade  from SC )<br>=ANY表示至少和一个相等<br>!=ALL表示和所有的都不相等</p>
+<p>12.UNION INTERSECTION EXCEPT<br>注意UNION会消去重复的元素<br>如果不想消除重复-&gt;union all </p>
+<p>13.ODDER BY 排序方法<br>ASC（m默认排序方式，升序） DESC （降序）<br>select * from tt order by n2 asc;（n2升序）<br>select * form tt ordet by n2 desc;(降序)<br>select * from tt oredr by  n2 desc  n1 asc (先按照n2降序 再按照 n1 升序)</p>
+<p>13.coalesce用法<br>SELCT Sno, Sname , COALESC(Cpno,’暂无先修课’) as c FROM Student<br>最后会显示sno sname cpno三个属性的元素值</p>
+<p>14.CASE WHEN语句<br>SELECT sno,sname,<br>&emsp;&emsp;CASE<br>&emsp;&emsp;&emsp;&emsp;WHEN sdept=’EM’  THEN ‘经济管理’<br>&emsp;&emsp;&emsp;&emsp;WHEN sdept!=’EM’ THEN ‘非经济管理’<br>&emsp;&emsp;&emsp;&emsp;ELSE ‘暂无系列’<br>&emsp;&emsp;END AS Department<br>FROM Student;<br>注意；最后会显示sno sname department 三个属性，’暂无系列可以对应NULL，改变NULL的值‘<br>!=不能修改NULL的值</p>
+<p>最后：本章节仅包含class_6的内容</p>
+</article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  浑水摸鱼rcx</span><a></a></p><p> <span>Copyright:  </span><span>所见即所思，请勿转载</span></p></div><div class="post-paginator"><a class="nextSlogan" href="../../16/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84class-4/" title="数据结构class_4_链接实现and队列"><span>NextPost ></span><br><span class="nextTitle">数据结构class_4_链接实现and队列</span></a><div class="clear"></div></div><div id="comment"></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span> | theme </span><a target="_blank" rel="noopener" href="https://github.com/Longlongyu/hexo-theme-Cxo"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>
