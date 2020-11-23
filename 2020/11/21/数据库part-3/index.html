@@ -120,4 +120,9 @@
 <li>PRIMARY(bar ,beer)放在后面<br>primary 和unique的区别：unique 可以为空，但是primary不能为空</li>
 </ol>
 <p>15.设置默认值<br> addr CHAR(50) DEFULT ‘132___xxx’</p>
+<p> 16.插入新的column<br>例 ALTER  TABLE Bars ADD Phone CHAR(16)</p>
+<p>17.修改属性的类型<br>ALTER TABLE Bars ALTER COLUMN phone CHAR(20);</p>
+<p>18.删除一些特定属性<br>ALTER TABLE Bars DROP COLUMN Liscense;</p>
+<p>19.没有直接更改参数名字的sql语句，可以用存储过程去实现</p>
+<p>20.虚拟表的构建 views<br>例CREATE VIEW Candrink AS<br>&emsp;&emsp;SELECT drink,beer FROM Frequents ,Sells<br>WHERE Frequents.bar=Sells.bar;</p>
 </article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  浑水摸鱼rcx</span><a></a></p><p> <span>Copyright:  </span><span>所见即所思，请勿转载</span></p></div><div class="post-paginator"><a class="nextSlogan" href="../%E6%95%B0%E6%8D%AE%E5%BA%93part2/" title="数据库part2"><span>NextPost ></span><br><span class="nextTitle">数据库part2</span></a><div class="clear"></div></div><div id="comment"></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span> | theme </span><a target="_blank" rel="noopener" href="https://github.com/Longlongyu/hexo-theme-Cxo"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>
