@@ -156,6 +156,9 @@ Error_code Stack::top(Stack_entry &amp;item) const &#123;
     item=top_node-&gt;entry;
     return  success;
 &#125;
+ Stack::Stack() &#123;
+ top_node = nullptr;
+&#125;
 Stack::~Stack()&#123;
     while (!empty())
         pop();
@@ -255,4 +258,25 @@ Queue::~Queue() &#123;
 &#125;
 
 #endif //CLASS_4_CLASS_4_H</code></pre>
+<p>关于栈代码的检验：</p>
+<pre><code>include &lt;iostream&gt;
+#include &quot;class_3.h&quot;
+#include &quot;class_4.h&quot;
+using namespace std;
+int main() &#123;
+    Stack a;
+    cout&lt;&lt;a.empty()&lt;&lt;endl;
+    a.push(1);
+    a.push(2);
+    int A;
+    a.top(A);
+    cout&lt;&lt;A&lt;&lt;&quot;A&quot;&lt;&lt;endl;
+    Stack b;
+    b=a;
+    int B1,B2;
+    b.pop();
+    b.top(B2);
+    cout&lt;&lt;B2&lt;&lt;&quot;_______&quot;&lt;&lt;endl;
+&#125;</code></pre>
+<p>注意：声明栈的时候应该用 Stack a;而不是 Stack * a 后者是声明了一个指向栈的指针</p>
 </article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  浑水摸鱼rcx</span><a></a></p><p> <span>Copyright:  </span><span>所见即所思，请勿转载</span></p></div><div class="post-paginator"><a class="prevSlogan" href="../../21/%E6%95%B0%E6%8D%AE%E5%BA%93part2/" title="数据库part2"><span>< PreviousPost</span><br><span class="prevTitle">数据库part2</span></a><a class="nextSlogan" href="../../14/rcx%E7%9A%84%E5%B7%A5%E4%BD%9C%E7%B0%BF%E2%80%94%E2%80%9411-14/" title="rcx的工作簿——11/14"><span>NextPost ></span><br><span class="nextTitle">rcx的工作簿——11/14</span></a><div class="clear"></div></div><div id="comment"></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span> | theme </span><a target="_blank" rel="noopener" href="https://github.com/Longlongyu/hexo-theme-Cxo"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>

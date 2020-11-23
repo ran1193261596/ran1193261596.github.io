@@ -107,7 +107,7 @@
 <p>7.NULL的一些用法<br>SELECT * FROM Student<br>&emsp;&emsp; WHERE phone is NULL;</p>
 <p>8.双重循环<br>SELECT bar FROM Sells<br>&emsp;&emsp;WHERE beer=’Miler‘ AND<br>&emsp;&emsp;&emsp;price=(<br>&emsp;&emsp;&emsp;&emsp;SELECT price FROM WHERE beer=’JOE’’S‘<br>&emsp;&emsp;&emsp;&emsp;AND beer=’Buds’;</p>
 <p>9.In的用法 配合where使用<br>例:<br>SELECT * FROM Beers<br>&emsp;&emsp;WHERE name IN {<br>&emsp;&emsp;&emsp;&emsp;&emsp;SELECT beer FROM LIKES<br>&emsp;&emsp;&emsp;&emsp;&emsp;WHERE  drinker=’Fred’);</p>
-<p>10Exists的用法<br>SELECT name  FROM Beers b1<br>&emsp;&emsp;WHERE NOT EXISTS(<br>&emsp;&emsp;SELECT *  FROM Beers<br>&emsp;&emsp;&emsp;&emsp;WHERE manf = b1.manf AND<br>&emsp;&emsp;&emsp;&emsp;name != b1.name);<br>主题 筛选是看b1的元组列，然后能否找到对应的条件</p>
+<p>10Exists的用法<br>SELECT name  FROM Beers b1<br>        WHERE NOT EXISTS(<br>&emsp;&emsp;SELECT *  FROM Beers<br>&emsp;&emsp;&emsp;&emsp;WHERE manf = b1.manf AND<br>&emsp;&emsp;&emsp;&emsp;name != b1.name);<br>主题 筛选是看b1的元组列，然后能否找到对应的条件</p>
 <p>11.操作符ANY(relation)和ALL(relation)的用法<br>SELECT grade FROM SC<br>&emsp;&emsp;WHERE  grade-30&gt;ANY(select  grade  from SC )<br>=ANY表示至少和一个相等<br>!=ALL表示和所有的都不相等</p>
 <p>12.UNION INTERSECTION EXCEPT<br>注意UNION会消去重复的元素<br>如果不想消除重复-&gt;union all </p>
 <p>13.ODDER BY 排序方法<br>ASC（m默认排序方式，升序） DESC （降序）<br>select * from tt order by n2 asc;（n2升序）<br>select * form tt ordet by n2 desc;(降序)<br>select * from tt oredr by  n2 desc  n1 asc (先按照n2降序 再按照 n1 升序)</p>
